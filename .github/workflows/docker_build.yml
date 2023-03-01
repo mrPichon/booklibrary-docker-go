@@ -8,8 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: action/checkout@v2
       - name: Build Docker image
-        run docker build . --file Dockerfile --tag booklibrary:$(date +%s)
+        run: docker build . --file Dockerfile --tag booklibrary:$(date +%s)
