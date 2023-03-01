@@ -1,0 +1,12 @@
+# syntax=docker/dockerfile:1
+# this works for remote debug and dlv
+FROM golang:latest AS build
+WORKDIR /app/
+ADD . /app/
+# COPY . ./
+# RUN go get github.com/go-delve/delve
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o booklibrary
+
+
+CMD [ "dlv", "--listen=:2345", "--headless=true", "--log-dest=log.txt", "--api-version=2", "--accept-multiclient", "exec", "./booklibrary" ]

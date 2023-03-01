@@ -1,0 +1,14 @@
+FROM golang:latest
+
+ENV PORT 8080
+
+WORKDIR /app
+
+ADD . /app/
+
+EXPOSE $PORT
+
+RUN go build -o booklibrary
+
+CMD [ "./booklibrary" ]
+# CMD [ "go", "run", "main.go" ]

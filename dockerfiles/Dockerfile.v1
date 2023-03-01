@@ -1,0 +1,24 @@
+## create args
+## commands: 
+## docker build --build-arg OS=linux --build-arg ARCH=amd64 -t booklibrary_amd64 .
+## docker run -d --env-file .env -p 8080:8082 -it booklibrary_amd64
+
+FROM golang:latest
+
+ENV PORT 8080
+
+WORKDIR /app
+
+ADD . /app/
+
+RUN go mod tidy
+RUN  go mod verify
+
+EXPOSE $PORT
+
+
+# ARG OS
+# ARG ARCH
+# RUN env GOOS=$OS GOARCH=$ARCH go build -o booklibrary .
+
+CMD [ "./booklibrary" ]

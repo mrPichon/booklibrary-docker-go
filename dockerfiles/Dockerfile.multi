@@ -1,0 +1,20 @@
+FROM golang:latest AS builder
+
+WORKDIR /app
+
+ADD . /app/
+
+RUN go build -o booklibrary
+
+# second layer
+
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY --from=builder /app/booklibrary .
+COPY --from=builder /app/static/* ./static/
+COPY --from=builder /app/templates/* ./templates/
+COPY --from=builder /app/app.env .
+
+CMD [ "./booklibrary" ]

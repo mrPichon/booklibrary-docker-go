@@ -1,0 +1,25 @@
+{
+    "booklist":[
+        {
+            "id": 1,
+            "name": "Harry",
+            "author": "J. K. Rowling",
+            "labels": "fiction",
+            "quantity": 3
+        },
+        {
+            "id": 2,
+            "name": "a",
+            "author": "a",
+            "labels": "terror",
+            "quantity": 5
+        },
+        {
+            "id": 2,
+            "name": "hola",
+            "author": "mama",
+            "labels": "drama",
+            "quantity": 3
+        }
+    ]
+}

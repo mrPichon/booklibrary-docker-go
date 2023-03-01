@@ -1,0 +1,17 @@
+# syntax=docker/dockerfile:1
+
+FROM golang:latest AS build
+WORKDIR /app/
+COPY . ./
+# RUN go build -o booklibrary 
+RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o booklibrary
+
+
+FROM alpine:latest
+WORKDIR /app/
+COPY --from=build /app/booklibrary .
+COPY --from=build /app/static/* ./static/
+COPY --from=build /app/templates/* ./templates/
+# COPY --from=build /app/app.env .
+CMD [ "./booklibrary" ]
+# ENTRYPOINT [ "./booklibrary" ]

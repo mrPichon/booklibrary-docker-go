@@ -1,0 +1,27 @@
+#syntax=docker/dockerfile:1
+
+## Build
+FROM golang:1.20.1-alpine3.17 AS build
+
+WORKDIR /app
+
+ADD . /app
+
+COPY /static ./
+
+RUN go mod tidy
+RUN  go mod verify
+
+# CMD [ "go", "run", "main.go" ]
+RUN go build -o /libraryapp
+
+## Deploy
+FROM gcr.io/distroless/static-debian11
+
+COPY --from=build /libraryapp /libraryapp
+
+EXPOSE 8080
+
+USER    nonroot:nonroot
+
+ENTRYPOINT [ "/libraryapp" ]
